@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form class="login-form" v-model="loginForm">
       <div>
-        <h2 style="color: #FFF">系统登录</h2>
+        <h2 style="color: #FFF">{{ num }}</h2>
       </div>
       <el-form-item>
         <el-input placeholder="账号" prefix-icon="el-icon-menu" v-model="loginForm.userName"></el-input>
@@ -16,6 +16,9 @@
 </template>
 
 <script>
+
+import { mapGetters, mapState } from 'vuex'
+
 export default {
   name: 'Login',
   data () {
@@ -28,8 +31,17 @@ export default {
   },
   methods: {
     doLogin () {
-      alert(1)
+      // alert(1)
+      this.$store.dispatch('footStatus/getNewNum', 2)
     }
+  },
+  computed: {
+    ...mapState({
+      num: state => state.footStatus.changableNum
+    }),
+    ...mapGetters('footStatus', {
+      num: 'getChangeNum'
+    })
   }
 }
 </script>
