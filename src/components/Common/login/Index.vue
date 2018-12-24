@@ -1,13 +1,13 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" v-model="loginForm">
+    <el-form class="login-form" :model="loginForm" :rules="loginRules" ref="loginForm">
       <div>
-        <h2 style="color: #FFF">{{ num }}</h2>
+        <h2 style="color: #FFF">系统登录</h2>
       </div>
-      <el-form-item>
-        <el-input placeholder="账号" prefix-icon="el-icon-menu" v-model="loginForm.userName"></el-input>
+      <el-form-item prop="userName">
+        <el-input placeholder="用户名" prefix-icon="el-icon-menu" v-model="loginForm.userName"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="passWord">
         <el-input placeholder="密码" type="password" prefix-icon="el-icon-edit" v-model="loginForm.passWord"></el-input>
       </el-form-item>
       <el-button type="primary" style="width: 520px;" @click="doLogin">登录</el-button>
@@ -17,8 +17,6 @@
 
 <script>
 
-import { mapGetters, mapState } from 'vuex'
-
 export default {
   name: 'Login',
   data () {
@@ -26,22 +24,22 @@ export default {
       loginForm: {
         userName: 'admin',
         passWord: '123456'
+      },
+      loginRules: {
+        userName: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+        passWord: [{required: true, message: '请输入密码', trigger: 'blur'}]
       }
     }
   },
   methods: {
     doLogin () {
-      // alert(1)
-      this.$store.dispatch('footStatus/getNewNum', 2)
+      alert(0)
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          alert(1)
+        }
+      })
     }
-  },
-  computed: {
-    ...mapState({
-      num: state => state.footStatus.changableNum
-    }),
-    ...mapGetters('footStatus', {
-      num: 'getChangeNum'
-    })
   }
 }
 </script>
