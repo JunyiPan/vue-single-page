@@ -33,10 +33,13 @@ export default {
   },
   methods: {
     doLogin () {
-      alert(0)
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          alert(1)
+          this.$store.dispatch('LoginByUserName', this.loginForm).then(() => {
+            this.$router.push({path: this.redirect || '/'})
+          }).catch(() => {
+
+          })
         }
       })
     }
